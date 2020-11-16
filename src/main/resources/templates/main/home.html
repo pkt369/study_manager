@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Study Manager</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="navbar navbar-black bg-silver">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand navbar-text-black" href="#">
+                    <img src="/img/study_icon.png" class="img-rounded" width="40px" height="40px;">
+                    <strong>Study Manager 2021</strong>
+                </a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <button class="btn btn-danger navbar-btn">로그인</button>
+            </ul>
+        </div>
+    </div>
+
+    <!--여기부터 아이콘-->
+    <div class="container background-icon">
+        <button class="btn btn-default icon-btn">
+            <img src="/img/calender_icon.png" class="img-rounded icon-size" alt="스케줄 관리하기">
+            <p><strong>스케줄 관리하기</strong></p>
+        </button>
+
+        <button class="btn btn-default icon-btn">
+            <img src="/img/team_icon.png" class="img-rounded icon-size" alt="팀 관리하기">
+            <p><strong>팀 관리하기</strong></p>
+        </button>
+
+        <div class="footer-padding"></div>
+    </div>
+
+    <!--스케줄 or 명언-->
+    <div class="footer">
+        <div class="container">
+            <div class="study-wise-saying"><strong>공부 명언</strong></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<style>
+    html,body{
+        margin:0;
+        padding:0;
+        height:100%;
+    }
+    .wrapper{
+        position:relative;
+        min-height:100%;
+    }
+    body{margin:0;}
+    .bg-silver{
+        background-color:#d7d7d7!important;
+    }
+    .navbar-text-black{
+        color:#000000;
+    }
+
+    .icon-size{
+        width:100px;
+        height:100px;
+    }
+    .icon-btn{
+        margin: 50px 50px 20px 10px;
+    }
+    .background-icon{
+        color:#000000;
+    }
+
+    .footer{
+        position:absolute;
+        bottom:0;
+        width:100%;
+        height:450px;
+        background-color:#a3cca3;
+    }
+
+    .study-wise-saying{
+        margin: 20px;
+        font-size: 25px;
+    }
+
+
+
+
+</style>
+
+
+</body>
+</html>
