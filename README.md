@@ -1,8 +1,13 @@
 # study_manager
 
-2020-11-15 프로젝트 시작
-    먼저 계획을 세운 뒤 포토샾으로 미리 스케치 후 작업
-    HTML/CSS으로 Home.html(기본페이지) 완성 - 부트스트랩 이용
+2020-11-15 프로젝트 시작 <br>
+
+    먼저 계획을 세운 뒤 포토샾으로 미리 스케치 후 작업 <br>
+    HTML/CSS으로 Home.html(기본페이지) 완성 - 부트스트랩 이용 <br>
+
+---------------------
+![image](https://user-images.githubusercontent.com/66049273/99237542-f85da400-283b-11eb-85ff-00d72cd318bb.png)
+---------------------
 
 
 요구사항 분석
@@ -25,12 +30,17 @@
 4.	스케줄 : 달성여부, 스케줄글, 날짜
 
 
-
-2020-11-16 요구사항 분석으로 데이터베이스 설계
+<hr>
+2020-11-16 <br>
+요구사항 분석으로 데이터베이스 설계 <br>
 
 데이터베이스 설계
 -----------------------
-![study_manager_database](https://user-images.githubusercontent.com/66049273/99220081-56c95900-2821-11eb-894e-f1026a91a5a9.png)
+![study_manager_20201116_15_22](https://user-images.githubusercontent.com/66049273/99262751-adef1e00-2861-11eb-94a0-8721c0f4ad7d.png)
+-----------------------
+
+엔티티 : member, team, chat, chat_message, schedule, schedule_content, wise_saying (7개 설계 완료)
+엔티티 설계 완료 후 테스트 작업 성공
 
 
 
