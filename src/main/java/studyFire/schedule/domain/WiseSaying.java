@@ -3,13 +3,14 @@ package studyFire.schedule.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class wise_saying {
+public class WiseSaying {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,5 +20,14 @@ public class wise_saying {
     private String talker;
     private String content;
 
+
+    //== 생성 메서드 ==//
+    public static WiseSaying createWiseSaying(String talker, String content) {
+        WiseSaying wiseSaying = new WiseSaying();
+        wiseSaying.setTalker(talker);
+        wiseSaying.setContent(content);
+
+        return wiseSaying;
+    }
 
 }

@@ -1,6 +1,6 @@
 # study_manager
 
-2020-11-15 프로젝트 시작 <br>
+2020-11-15 프로젝트 시작 (version 0.0.1) <br>
 
     먼저 계획을 세운 뒤 포토샾으로 미리 스케치 후 작업 <br>
     HTML/CSS으로 Home.html(기본페이지) 완성 - 부트스트랩 이용 <br>
@@ -31,7 +31,7 @@
 
 
 <hr>
-2020-11-16 <br>
+2020-11-16 (version 0.0.2) <br>
 요구사항 분석으로 데이터베이스 설계 <br>
 
 데이터베이스 설계
@@ -41,6 +41,14 @@
 
 엔티티 : member, team, chat, chat_message, schedule, schedule_content, wise_saying (7개 설계 완료)
 엔티티 설계 완료 후 테스트 작업 성공
+
+<hr>
+2020-11-17 (version 0.0.3)<br>
+Repository, Service 구현 <br>
+기능을 구현했지만 아직 미완성인 느낌이 듭니다. <br> 
+테스트하면서 수정을 할 예정입니다.<br>
+
+
 
 
 

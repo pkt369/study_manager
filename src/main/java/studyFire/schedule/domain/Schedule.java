@@ -22,12 +22,17 @@ public class Schedule {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Column(unique = true)
     private LocalDate date;
 
     @OneToMany(mappedBy = "schedule")
     private List<ScheduleContent> contents = new ArrayList<>();
 
     private int achieve_rate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    private Team team;
 
 
     protected void setDate(LocalDate date) {
@@ -45,14 +50,21 @@ public class Schedule {
         member.getSchedules().add(this);
     }
 
+
     //=== 생성 메서드 ===/
-    public static Schedule createSchedule(Member member, int achieve_rate) {
+    public static Schedule createSchedule(Member member) {
         Schedule schedule = new Schedule();
         schedule.setMember(member);
         schedule.setDate(LocalDate.now());
-        schedule.setAchieve_rate(achieve_rate);
+        schedule.setAchieve_rate(0);
 
         return schedule;
+    }
+
+    //=== 기능 메서드 ===/
+    //팀에 공유
+    public void inputSchedule(Team team) {
+        this.team = team;
     }
 
 }

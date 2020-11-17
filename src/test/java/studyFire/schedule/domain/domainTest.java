@@ -24,7 +24,7 @@ public class domainTest {
     public void 멤버() throws Exception {
         //given
         Member member = Member.createMember("aa@aaa.com","aaa", "세준" , 10);
-        Team team = Team.createTeam();
+        Team team = Team.createTeam("팀1");
 
 
         //when
@@ -46,7 +46,7 @@ public class domainTest {
     public void 채팅() throws Exception {
         //given
         Member member = Member.createMember("aa@aaa.com", "aaa", "세준", 10);
-        Team team = Team.createTeam();
+        Team team = Team.createTeam("팀1");
         member.changeTeam(team);
         ChatMessage message = ChatMessage.createMessage("안녕", team.getChat());
 
@@ -71,8 +71,8 @@ public class domainTest {
     public void 스케줄() throws Exception {
         //given
         Member member = Member.createMember("aa@aaa.com", "aaa", "세준", 10);
-        Team team = Team.createTeam();
-        Schedule schedule = Schedule.createSchedule(member, 0);
+        Team team = Team.createTeam("팀1");
+        Schedule schedule = Schedule.createSchedule(member);
         ScheduleContent content = ScheduleContent.createContent(schedule, "제목", "여기에 글 쓰기");
 
         //when

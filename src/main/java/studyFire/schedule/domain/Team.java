@@ -22,10 +22,14 @@ public class Team {
     private String isAchieve;
     private int team_point;
     private int achieve_rate;
+    private String name;
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "chat_id")
     private Chat chat;
+
+    @OneToMany(mappedBy = "team")
+    private List<Schedule> schedules = new ArrayList<>();
 
     private void setChat(Chat chat) {
         this.chat = chat;
@@ -43,12 +47,17 @@ public class Team {
         this.achieve_rate = achieve_rate;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     //== 생성 메서드 ==//
-    public static Team createTeam() {
+    public static Team createTeam(String name) {
         Team team = new Team();
         team.setIsAchieve("false");
         team.setTeam_point(0);
         team.setAchieve_rate(0);
+        team.setName(name);
         team.setChat(new Chat());
 
         return team;
