@@ -24,6 +24,10 @@ public class ChatMessageService {
         return chatMessage.getId();
     }
 
+    public ChatMessage findOne(Long id) {
+        return messageRepository.findOne(id);
+    }
+
     //채팅에 들어가있는 메세지 찾기
     public List<ChatMessage> findMessageInChat(Chat chat) {
         return messageRepository.findByChat(chat);

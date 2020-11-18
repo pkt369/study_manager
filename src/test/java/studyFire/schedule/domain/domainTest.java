@@ -48,7 +48,7 @@ public class domainTest {
         Member member = Member.createMember("aa@aaa.com", "aaa", "세준", 10);
         Team team = Team.createTeam("팀1");
         member.changeTeam(team);
-        ChatMessage message = ChatMessage.createMessage("안녕", team.getChat());
+        ChatMessage message = ChatMessage.createMessage("안녕", team.getChat(), member);
 
         //when
         em.persist(member);

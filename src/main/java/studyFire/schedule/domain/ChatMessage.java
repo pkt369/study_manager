@@ -22,9 +22,10 @@ public class ChatMessage {
     @JoinColumn(name = "chat_id")
     private Chat chat;
 
-    private void setId(Long id) {
-        this.id = id;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
 
     private void setMessage(String message) {
         this.message = message;
@@ -40,13 +41,19 @@ public class ChatMessage {
         chat.getMessages().add(this);
     }
 
+    private void setMember(Member member) {
+        this.member = member;
+        member.getMessages().add(this);
+    }
+
 
     //== 생성 메서드==//
-    public static ChatMessage createMessage(String message, Chat chat) {
+    public static ChatMessage createMessage(String message, Chat chat, Member member) {
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setMessage(message);
         chatMessage.setCreateAt(LocalDateTime.now());
         chatMessage.setChat(chat);
+        chatMessage.setMember(member);
 
         return chatMessage;
     }

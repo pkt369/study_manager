@@ -18,14 +18,15 @@ public class ScheduleContentRepository {
         em.persist(content);
     }
 
+
     public ScheduleContent findOne(Long id) {
         return em.find(ScheduleContent.class, id);
     }
 
     public List<ScheduleContent> findAllBySchedule(Schedule schedule) {
-        return em.createQuery("select c from ScheduleContent c fetch join Schedule s on s.id = :id where s.id = c.schedule",
+        return em.createQuery("select c from ScheduleContent c join fetch c.schedule s where s = :schedule",
                 ScheduleContent.class)
-                .setParameter("id", schedule.getId())
+                .setParameter("schedule", schedule)
                 .getResultList();
     }
 

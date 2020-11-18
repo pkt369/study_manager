@@ -10,6 +10,8 @@ import studyFire.schedule.repository.ScheduleContentRepository;
 import studyFire.schedule.repository.ScheduleRepository;
 import studyFire.schedule.repository.TeamRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -32,6 +34,12 @@ public class ScheduleService {
         contentRepository.save(content);
         return content.getId();
     }
+
+    public List<ScheduleContent> findContent(Schedule schedule) {
+        return contentRepository.findAllBySchedule(schedule);
+    }
+
+
 
 
 }

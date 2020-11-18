@@ -18,12 +18,15 @@ public class MessageRepository {
         em.persist(message);
     }
 
+    public ChatMessage findOne(Long id) {
+        return em.find(ChatMessage.class, id);
+    }
+
     //Chat의 정보를 가져와서 해결.
     public List<ChatMessage> findByChat(Chat chat) {
-        Long chatId = em.find(Chat.class, chat.getId()).getId();
 
-        return em.createQuery("select m from ChatMessage m where m.chat = :chatId", ChatMessage.class)
-                .setParameter("chatId", chatId)
+        return em.createQuery("select m from ChatMessage m where m.chat = :chat", ChatMessage.class)
+                .setParameter("chat", chat)
                 .getResultList();
     }
 }

@@ -3,6 +3,8 @@ package studyFire.schedule.repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import studyFire.schedule.domain.Member;
+import studyFire.schedule.domain.Schedule;
+import studyFire.schedule.domain.Team;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -31,4 +33,11 @@ public class MemberRepository {
                 .setParameter("email", email)
                 .getResultList();
     }
+
+    public List<Member> findTeam(Team team) {
+        return em.createQuery("select m from Member m join fetch m.team t where t = :team", Member.class)
+                .setParameter("team", team)
+                .getResultList();
+    }
+
 }

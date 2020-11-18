@@ -25,6 +25,9 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Schedule> schedules = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member")
+    private List<ChatMessage> messages = new ArrayList<>();
+
     private String email;
     private String password;
     private String name;

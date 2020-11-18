@@ -12,6 +12,7 @@ import studyFire.schedule.repository.MessageRepository;
 import studyFire.schedule.repository.ScheduleRepository;
 import studyFire.schedule.repository.TeamRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,7 +26,7 @@ public class TeamService {
     private final MessageRepository messageRepository;
 
     @Transactional
-    public Long makeTeam(Team team) {
+    public Long save(Team team) {
         teamRepository.save(team); //Chat도 저장됨
         return team.getId();
     }
@@ -50,9 +51,10 @@ public class TeamService {
     }
 
     // 스케줄 공유 기능
-    public List<Schedule> bringScheduleList(Member member) {
+    public List<Schedule> bringScheduleList(Team team) {
         //멤버에게서 가져온 스케줄 //스케줄을 날짜별로 리스트를 만들어 선택하도록 만들기
-        return scheduleRepository.findAllByMember(member);
+
+        return teamRepository.findSchedules(team);
     }
 
     //채팅 이전에 했던것들 다가져오기

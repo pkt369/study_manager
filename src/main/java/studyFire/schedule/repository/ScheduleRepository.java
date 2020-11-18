@@ -6,6 +6,7 @@ import studyFire.schedule.domain.Member;
 import studyFire.schedule.domain.Schedule;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -23,7 +24,9 @@ public class ScheduleRepository {
     }
 
     public List<Schedule> findAllByMember(Member member) {
-        return em.createQuery("select s from Schedule s fetch join member m on m.id = :memberId where m.id = s.member",
+//        LocalDate date = LocalDate.now();
+        //오늘 날짜만 가져올수있게 함.
+        return em.createQuery("select s from Schedule s join fetch s.member m where m.id = :memberId",
                 Schedule.class)
                 .setParameter("memberId", member.getId())
                 .getResultList();

@@ -48,6 +48,11 @@ Repository, Service 구현 <br>
 기능을 구현했지만 아직 미완성인 느낌이 듭니다. <br> 
 테스트하면서 수정을 할 예정입니다.<br>
 
+<hr>
+2020-11-18 (version 0.0.35)<br>
+Test 절반이상 완성 <br>
+Repository, Service 부족한 부분 채웠습니다.<br>
+
 
 
 
