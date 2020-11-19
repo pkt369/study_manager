@@ -34,6 +34,15 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
+    public Member findByEmail(String email) {
+        List<Member> findMembers = memberRepository.findByEmail(email);
+        if(findMembers.size() != 0){
+            Long id = findMembers.get(0).getId();
+            return memberRepository.findOne(id);
+        }
+        return null;
+    }
+
 
     private void validateDuplicateMember(Member member) {
         List<Member> email = memberRepository.findByEmail(member.getEmail());

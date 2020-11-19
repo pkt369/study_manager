@@ -34,6 +34,9 @@ public class TeamService {
     //초대기능
     @Transactional
     public void invite(Member member, Team team) {
+        if(member == null || team == null){
+            throw new IllegalStateException("팀 또는 멤버가 없습니다.");
+        }
         //이미 팀에 들어가있는지 확인
         Member mem = memberRepository.findOne(member.getId());
         if (mem.getTeam() != null) {
@@ -61,6 +64,10 @@ public class TeamService {
     public List<ChatMessage> bringMessage(Team team) {
         List<ChatMessage> chatting = messageRepository.findByChat(team.getChat());
         return chatting;
+    }
+
+    public List<Team> findByName(String name) {
+        return teamRepository.findByName(name);
     }
 
 }

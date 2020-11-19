@@ -28,7 +28,9 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<ChatMessage> messages = new ArrayList<>();
 
+    @Column(unique = true)
     private String email;
+
     private String password;
     private String name;
     private int age;

@@ -53,6 +53,10 @@ Repository, Service 구현 <br>
 Test 절반이상 완성 <br>
 Repository, Service 부족한 부분 채웠습니다.<br>
 
+<hr>
+2020-11-19 (version 0.0.40) <br>
+Test Team-Kickout메서드를 제외한 모든 Test 성공<br>
+
 
 
 
