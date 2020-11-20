@@ -18,10 +18,6 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_id")
-    private Team team;
-
     @OneToMany(mappedBy = "member")
     private List<Schedule> schedules = new ArrayList<>();
 
@@ -56,11 +52,6 @@ public class Member {
         this.member_point = member_point;
     }
 
-    //== 편의 메서드 ==//
-    public void setTeam(Team team) {
-        this.team = team;
-        team.getMembers().add(this);
-    }
 
     //== 생성 메서드 ==//
     public static Member createMember(String email, String password, String name, int age) {
@@ -74,9 +65,6 @@ public class Member {
         return member;
     }
 
-    //== 비지니스 로직 ==//
-    public void changeTeam(Team team) {
-        this.setTeam(team);
-    }
+
 
 }

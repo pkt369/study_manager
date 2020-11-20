@@ -35,7 +35,7 @@ class ChatMessageServiceTest {
         //given
         Member member = Member.createMember("aaa@aaa", "aaa", "세준", 24);
         Team team = Team.createTeam("팀1");
-        teamService.save(team);
+        teamService.save(team, member);
 
         ChatMessage message = ChatMessage.createMessage("지금보내는건 1", team.getChat(), member);
 
@@ -60,8 +60,7 @@ class ChatMessageServiceTest {
         ChatMessage message1 = ChatMessage.createMessage("안뇽2", team.getChat(), member);
 
         //when
-        Long teamId = teamService.save(team);
-        member.setTeam(team);
+        Long teamId = teamService.save(team, member);
         Long memberId = memberService.join(member);
         Long messageId = chatMessageService.sendMessage(message);
         chatMessageService.sendMessage(message1);

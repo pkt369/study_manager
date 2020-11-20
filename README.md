@@ -36,7 +36,7 @@
 
 데이터베이스 설계
 -----------------------
-![study_manager_20201116_15_22](https://user-images.githubusercontent.com/66049273/99262751-adef1e00-2861-11eb-94a0-8721c0f4ad7d.png)
+![study_manager_0 0 5_20201120_20_36](https://user-images.githubusercontent.com/66049273/99829580-d21f6780-2b9f-11eb-804d-e0c99c40534a.png)
 -----------------------
 
 엔티티 : member, team, chat, chat_message, schedule, schedule_content, wise_saying (7개 설계 완료)
@@ -56,6 +56,13 @@ Repository, Service 부족한 부분 채웠습니다.<br>
 <hr>
 2020-11-19 (version 0.0.40) <br>
 Test Team-Kickout메서드를 제외한 모든 Test 성공<br>
+
+<hr>
+2020-11-20 (version 0.0.41) <br>
+데이터베이스 멤버와 팀의 관계에서 null값이 있어 데이터베이스 수정<br>
+join_team_member 일대다, 다대일 테이블 생성 => 중간에서 연결해주는 역할 <br>
+이후 전체적인 코드 수정 => Test 전체 성공 <br>
+
 
 
 

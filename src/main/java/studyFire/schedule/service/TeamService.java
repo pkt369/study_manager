@@ -3,14 +3,8 @@ package studyFire.schedule.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import studyFire.schedule.domain.ChatMessage;
-import studyFire.schedule.domain.Member;
-import studyFire.schedule.domain.Schedule;
-import studyFire.schedule.domain.Team;
-import studyFire.schedule.repository.MemberRepository;
-import studyFire.schedule.repository.MessageRepository;
-import studyFire.schedule.repository.ScheduleRepository;
-import studyFire.schedule.repository.TeamRepository;
+import studyFire.schedule.domain.*;
+import studyFire.schedule.repository.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,33 +18,41 @@ public class TeamService {
     private final TeamRepository teamRepository;
     private final ScheduleRepository scheduleRepository;
     private final MessageRepository messageRepository;
+    private final JoinTeamMemberRepository joinTeamMemberRepository;
 
     @Transactional
-    public Long save(Team team) {
-        teamRepository.save(team); //Chat도 저장됨
+    public Long save(Team team, Member member) {
+        teamRepository.save(team, member); //Chat도 저장됨
         return team.getId();
     }
 
     //초대기능
     @Transactional
     public void invite(Member member, Team team) {
-        if(member == null || team == null){
-            throw new IllegalStateException("팀 또는 멤버가 없습니다.");
-        }
-        //이미 팀에 들어가있는지 확인
-        Member mem = memberRepository.findOne(member.getId());
-        if (mem.getTeam() != null) {
-            throw new IllegalStateException("이미 팀이 있는 회원입니다.");
-        }
-
-        mem.changeTeam(team); //dirty checking
+        JoinTeamMember joinTeamMember = JoinTeamMember.createJoinTeamMember(member, team);
+        joinTeamMemberRepository.joinTeam(joinTeamMember);
     }
 
     //강퇴기능
     @Transactional
-    public void kickOut(Member member) {
-        Member mem = memberRepository.findOne(member.getId());
-        mem.changeTeam(null);
+    public void kickOut(Member member, Team team) {
+        //멤버 강퇴 코드
+        List<JoinTeamMember> teamMember = joinTeamMemberRepository.findTeamMember(member, team);
+        joinTeamMemberRepository.deleteTeamMember(teamMember.get(0));
+
+        //나가는 사람이 팀장이고 혼자였으면 방을 폭파
+        //팀장이고 두명 이상이면 팀장을 자동으로 바꿔줌
+//        CheckCaptainAndChange(member, team);
+
+
+    }
+
+
+
+    //조장 변경기능
+    @Transactional
+    public void changeCaptainMember(Member member, Team team) {
+        joinTeamMemberRepository.changeCaptainMember(member, team);
     }
 
     // 스케줄 공유 기능
@@ -70,4 +72,30 @@ public class TeamService {
         return teamRepository.findByName(name);
     }
 
+    public List<JoinTeamMember> findJoinTeamMemberList(Team team) {
+        return joinTeamMemberRepository.findTeamMemberList(team);
+    }
+
+    public List<JoinTeamMember> findJoinTeamMember(Member member, Team team) {
+        return joinTeamMemberRepository.findTeamMember(member, team);
+    }
+
+    //나가는 사람이 팀장이면 그다음사람으로 변경
+    @Transactional
+    private void CheckCaptainAndChange(Member member, Team team) {
+        //나간사람이 방장이 아니면 메서드 지나치기
+        if(member != team.getCaptain_member()){
+            return;
+        }
+        List<JoinTeamMember> teamMemberList = joinTeamMemberRepository.findTeamMemberList(team);
+        //방에 아무도 없으면 폭파
+        if(teamMemberList.size() == 0){
+            teamRepository.deleteTeam(team);
+            return;
+        }
+
+        //이미 방장이 나가서 그다음사람이 방장역할을 맡게됨
+        joinTeamMemberRepository.changeCaptainMember(teamMemberList.get(0).getMember(), team);
+
+    }
 }

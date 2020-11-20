@@ -34,11 +34,6 @@ public class MemberRepository {
                 .getResultList();
     }
 
-    //이미 팀이 되어있는 멤버들 찾기
-    public List<Member> findTeam(Team team) {
-        return em.createQuery("select m from Member m join fetch m.team t where t = :team", Member.class)
-                .setParameter("team", team)
-                .getResultList();
-    }
+
 
 }

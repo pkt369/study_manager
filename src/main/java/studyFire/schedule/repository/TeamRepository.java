@@ -2,6 +2,8 @@ package studyFire.schedule.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import studyFire.schedule.domain.JoinTeamMember;
+import studyFire.schedule.domain.Member;
 import studyFire.schedule.domain.Schedule;
 import studyFire.schedule.domain.Team;
 
@@ -14,7 +16,9 @@ public class TeamRepository {
 
     private final EntityManager em;
 
-    public void save(Team team) {
+    //처음 팀이 만들어지면 바로 만든 사람이 조장
+    public void save(Team team, Member member) {
+        team.ChangeCaptainMember(member);
         em.persist(team);
     }
 
@@ -38,6 +42,12 @@ public class TeamRepository {
                 .setParameter("team", team)
                 .getResultList();
     }
+
+    public void deleteTeam(Team team) {
+        em.remove(team);
+    }
+
+
 
 
 

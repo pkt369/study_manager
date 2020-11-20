@@ -16,8 +16,9 @@ public class Team {
     @Column(name = "team_id")
     private Long id;
 
-    @OneToMany(mappedBy = "team")
-    private List<Member> members = new ArrayList<>();
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member captain_member;
 
     private String isAchieve;
     private int team_point;
@@ -30,6 +31,9 @@ public class Team {
 
     @OneToMany(mappedBy = "team")
     private List<Schedule> schedules = new ArrayList<>();
+
+    @OneToMany(mappedBy = "team")
+    private List<JoinTeamMember> joinTeamMembers = new ArrayList<>();
 
     private void setChat(Chat chat) {
         this.chat = chat;
@@ -61,6 +65,11 @@ public class Team {
         team.setChat(new Chat());
 
         return team;
+    }
+
+    //== 비즈니스로직 ==//
+    public void ChangeCaptainMember(Member member) {
+        this.captain_member = member;
     }
 
 }

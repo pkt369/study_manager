@@ -29,7 +29,6 @@ public class domainTest {
 
         //when
         //멤버가 팀에 들어가기
-        member.changeTeam(team);
 
         em.persist(member);
         em.persist(team);
@@ -38,7 +37,6 @@ public class domainTest {
 
         //then
         assertThat("세준").isEqualTo(findMember.getName());
-        assertThat(team).isSameAs(findMember.getTeam());
 
     }
 
@@ -47,7 +45,6 @@ public class domainTest {
         //given
         Member member = Member.createMember("aa@aaa.com", "aaa", "세준", 10);
         Team team = Team.createTeam("팀1");
-        member.changeTeam(team);
         ChatMessage message = ChatMessage.createMessage("안녕", team.getChat(), member);
 
         //when
