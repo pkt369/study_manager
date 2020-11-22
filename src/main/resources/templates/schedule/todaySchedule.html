@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Study Manager</title>
+    <link rel="stylesheet" href="/css/util.css">
+</head>
+<body>
+
+<th:block th:replace="schedule/navbar :: navbar"/>
+
+    <div class="leftBar text-center" >
+        <button class="btn-default btn-size changeHover todaySchedule" onclick="location.href='/user/todaySchedule'">오늘의 스케줄</button>
+        <button class="btn-default btn-size changeHover lookAtCalendar" onclick="location.href='/user/calendar'">달력으로 보기</button>
+        <button class="btn-default btn-size changeHover createSchedule" onclick="location.href='/user/createSchedule'">스케줄 만들기</button>
+    </div>
+
+<div class="container-fix m-t-50">
+    <div class="container">
+        <div class="progress text-center ">
+            <div class="progress-bar progress-bar-info m-b-20" role="progressbar" aria-valuenow="50"
+                 aria-valuemin="0" aria-valuemax="100" style="width:50%; height: 100px;">
+                50% Complete (info)
+            </div>
+        </div>
+
+        <div th:each="schedule : ${schedules}" class="outline-black jumbotron">
+            <input type="checkbox" th:id="${schedule.id}">
+            <label th:for="${schedule.id}" th:text="'&nbsp&nbsp&nbsp&nbsp' + ${schedule.content_header} + '  :  ' + ${schedule.content_body}"
+                   class="font-weight-bold fs-20 m-l-30">활성화 여부</label>
+        </div>
+    </div>
+</div>
+
+<style>
+    .todaySchedule{
+        background-color: #1b1e21;
+        color: white;
+    }
+
+    .outline-black{
+        background-color: #545b62;
+        color: white;
+        padding: 20px 20px 20px 20px;
+
+    }
+</style>
+
+</body>
+</html>

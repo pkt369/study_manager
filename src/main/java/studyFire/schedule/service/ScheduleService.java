@@ -37,7 +37,7 @@ public class ScheduleService {
 //        Schedule schedule = isExistScheduleAndSave(member, date);
         List<Schedule> existSchedule = scheduleRepository.isExistSchedule(member, date);
         if (existSchedule.isEmpty()) {
-            Schedule schedule = Schedule.createSchedule(member);
+            Schedule schedule = Schedule.createSchedule(member, date);
             scheduleRepository.save(schedule);
             content.setSchedule(schedule);
         }else{
@@ -52,12 +52,13 @@ public class ScheduleService {
         return contentRepository.findAllBySchedule(schedule);
     }
 
+    //사용 X
     @Transactional
     protected Schedule isExistScheduleAndSave(Member member, LocalDate date) {
         //같은 날짜에 만들어졌는지 확인하기
         List<Schedule> existSchedule = scheduleRepository.isExistSchedule(member, date);
         if (existSchedule.isEmpty()) {
-            Schedule schedule = Schedule.createSchedule(member);
+            Schedule schedule = Schedule.createSchedule(member,date);
             scheduleRepository.save(schedule);
             return schedule;
         }
@@ -74,6 +75,10 @@ public class ScheduleService {
 
     public List<Schedule> findAllByMemberDate(Member member, LocalDate date) {
         return findAllByMemberDate(member, date);
+    }
+
+    public List<ScheduleContent> todaySchedule(Member member) {
+        return scheduleRepository.todaySchedule(member);
     }
 
 

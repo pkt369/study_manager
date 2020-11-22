@@ -7,7 +7,43 @@
 </head>
 <body>
 
-<th:block th:replace="schedule/background :: background"/>
+<th:block th:replace="schedule/navbar :: navbar"/>
+<div class="container-fix">
+    <div class="leftBar text-center">
+        <button class="btn-default btn-size changeHover todaySchedule" onclick="location.href='/user/todaySchedule'">오늘의 스케줄</button>
+        <button class="btn-default btn-size changeHover lookAtCalendar" onclick="location.href='/user/calendar'">달력으로 보기</button>
+        <button class="btn-default btn-size changeHover createSchedule" onclick="location.href='/user/createSchedule'">스케줄 만들기</button>
+    </div>
+    <div class="container text-center">
+        <img src="/img/calendar_icon.png" class="img-rounded marginTop50" width="100px;" height="100px;">
+        <form class="text-center validate-form" name="myForm" th:action="@{/user/createSchedule}"
+              onsubmit="return validateForm()" th:object="${form}" method="post">
+            <div class="form-group row">
+                <div class="col-xl-8 text-center center_div">
+                    <label for="exampleInputEmail" style="float: left">날짜</label>
+                    <input type="date" class="form-control" id="exampleInputEmail" th:field="*{date}" aria-describedby="emailHelp" placeholder="YYYY-MM-DD">
+                    <small id="emailHelp" class="form-text text-muted" style="float: left">저장할 날짜를 골라주세요</small>
+                </div>
+
+                <div class="col-xl-8 marginTop50 center_div">
+                    <label for="exampleInputHeader" style="float: left">주제</label>
+                    <input type="text" class="form-control" id="exampleInputHeader" th:field="*{content_header}" aria-describedby="headerHelp" placeholder="공부 주제">
+                    <small id="headerHelp" class="form-text text-muted" style="float: left">어떤 공부를 하시는지 적어주세요</small>
+                </div>
+
+                <div class="col-xl-8 marginTop50 center_div">
+                    <label for="exampleTextarea" style="float: left">분량</label>
+                    <textarea class="form-control" id="exampleTextarea" rows="7" th:field="*{content_body}" aria-describedby="bodyHelp" placeholder="분량(하나만 입력)"></textarea>
+                    <small id="bodyHelp" class="form-text text-muted" style="float: left">할 분량을 하나씩 입력해주세요</small>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-dark btn-lg marginTop50" id="save_btn" value="저장하기">저장하기</button>
+
+        </form>
+    </div>
+</div>
+
 
 <style>
     html, body { height:100%; }
@@ -15,6 +51,31 @@
         background-color: #1b1e21;
         color: white;
     }
+
+    .blackline{
+        border: 1px solid black;
+    }
+
+
+
+    .saveButton{
+        width: 200px;
+        height: 70px;
+        color: white;
+    }
+
 </style>
+
+<script>
+    function validateForm() {
+        var x1 = document.forms["myForm"]["date"].value;
+        var x2 = document.forms["myForm"]["content_header"].value;
+        var x3 = document.forms["myForm"]["content_body"].value;
+        if (x1 == "" || x2 == "" || x3 == "") {
+            alert("빈공간이 있습니다.");
+            return false;
+        }
+    }
+</script>
 </body>
 </html>

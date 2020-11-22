@@ -7,8 +7,9 @@
 html, body { height:100%; }
 
 .leftBar {
-    left: 0;
-    width: 300px;
+    float:left;
+    left: 0px;
+    width: 17rem;
     height: 100%;
     background-color: white;
     /*border: 1px solid black;*/
@@ -49,3 +50,25 @@ html, body { height:100%; }
 .navbar-text-black{
     color:#000000;
 }
+
+.center_div{
+    margin: 0 auto;
+    width: 100%;
+}
+
+.marginTop50{
+    margin-top: 50px;
+}
+
+input[type=checkbox] { display:none; }
+
+input[type=checkbox] + label {
+    display: inline-block;
+    cursor: pointer;
+    line-height: 24px;
+    padding-left: 24px;
+    background: url('/img/unchecked.png') left/24px no-repeat;
+}
+
+input[type=checkbox]:checked + label { background-image: url('/img/checked.png'); }
+

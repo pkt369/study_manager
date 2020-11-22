@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Study Manager</title>
+
+</head>
+<body>
+
+<th:block th:replace="schedule/navbar :: navbar"/>
+<div class="container-fix">
+    <div class="leftBar text-center">
+        <button class="btn-default btn-size changeHover todaySchedule" onclick="location.href='/user/todaySchedule'">오늘의 스케줄</button>
+        <button class="btn-default btn-size changeHover lookAtCalendar" onclick="location.href='/user/calendar'">달력으로 보기</button>
+        <button class="btn-default btn-size changeHover createSchedule" onclick="location.href='/user/createSchedule'">스케줄 만들기</button>
+    </div>
+    <div class="container text-center">
+
+    </div>
+</div>
+
+<style>
+    .lookAtCalendar{
+        background-color: #1b1e21;
+        color: white;
+    }
+</style>
+
+</body>
+</html>

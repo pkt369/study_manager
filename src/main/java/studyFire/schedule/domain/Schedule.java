@@ -2,10 +2,12 @@ package studyFire.schedule.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class Schedule {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
     @OneToMany(mappedBy = "schedule")
@@ -51,11 +54,12 @@ public class Schedule {
 
 
     //=== 생성 메서드 ===/
-    public static Schedule createSchedule(Member member) {
+    public static Schedule createSchedule(Member member, LocalDate date) {
         Schedule schedule = new Schedule();
         schedule.setMember(member);
-        schedule.setDate(LocalDate.now());
+//        schedule.setDate(LocalDate.parse("yyyyMMdd", DateTimeFormatter.BASIC_ISO_DATE));
         schedule.setAchieve_rate(0);
+        schedule.setDate(date);
 
         return schedule;
     }

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import studyFire.schedule.domain.Member;
 import studyFire.schedule.domain.Schedule;
+import studyFire.schedule.domain.ScheduleContent;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -43,6 +44,14 @@ public class ScheduleRepository {
                 Schedule.class)
                 .setParameter("memberId", member.getId())
                 .setParameter("date", date)
+                .getResultList();
+    }
+
+    public List<ScheduleContent> todaySchedule(Member member) {
+        return em.createQuery("select c from ScheduleContent c join fetch c.schedule s " +
+                "where s.member = :member and s.date = :date", ScheduleContent.class)
+                .setParameter("member", member)
+                .setParameter("date", LocalDate.now())
                 .getResultList();
     }
 

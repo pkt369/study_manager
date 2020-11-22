@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="background">
-    <link rel="stylesheet" href="/css/background.css">
+<div th:fragment="navbar">
+    <link rel="stylesheet" href="/css/navbar.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <div class="navbar navbar-black bg-silver">
         <div class="container">
@@ -23,9 +24,5 @@
         </div>
     </div>
 
-    <div class="leftBar text-center">
-        <button class="btn-default btn-size changeHover todaySchedule">오늘의 스케줄</button>
-        <button class="btn-default btn-size changeHover lookAtCalendar">달력으로 보기</button>
-        <button class="btn-default btn-size changeHover createSchedule">스케줄 만들기</button>
-    </div>
+
 </div>
