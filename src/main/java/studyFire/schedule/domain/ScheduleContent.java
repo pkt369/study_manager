@@ -47,9 +47,8 @@ public class ScheduleContent {
     }
 
     //== 생성 메서드 ==//
-    public static ScheduleContent createContent(Schedule schedule, String content_header, String content_body) {
+    public static ScheduleContent createContent(String content_header, String content_body) {
         ScheduleContent content = new ScheduleContent();
-        content.schedule = schedule;
         content.content_header = content_header;
         content.content_body = content_body;
         content.createAt = LocalDateTime.now();

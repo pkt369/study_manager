@@ -69,22 +69,20 @@ public class domainTest {
         //given
         Member member = Member.createMember("aa@aaa.com", "aaa", "세준", 10);
         Team team = Team.createTeam("팀1");
-        Schedule schedule = Schedule.createSchedule(member);
-        ScheduleContent content = ScheduleContent.createContent(schedule, "제목", "여기에 글 쓰기");
+        ScheduleContent content = ScheduleContent.createContent("제목", "여기에 글 쓰기");
 
         //when
         em.persist(member);
         em.persist(team);
-        em.persist(schedule);
         em.persist(content);
 
         //then
-        Schedule findSchedule = em.find(Schedule.class, schedule.getId());
-
-        //멤버가 가지고 있는 스케줄과 만든 스케줄의 id 같은지 확인
-        assertThat(member.getSchedules().get(0).getId()).isEqualTo(schedule.getId());
-        //글쓴게 스케줄에 들어갔는지 확인
-        assertThat(content.getSchedule().getId()).isEqualTo(schedule.getId());
+//        Schedule findSchedule = em.find(Schedule.class, .getId());
+//
+//        //멤버가 가지고 있는 스케줄과 만든 스케줄의 id 같은지 확인
+//        assertThat(member.getSchedules().get(0).getId()).isEqualTo(schedule.getId());
+//        //글쓴게 스케줄에 들어갔는지 확인
+//        assertThat(content.getSchedule().getId()).isEqualTo(schedule.getId());
         //글쓴게 똑같은지 확인
         assertThat(content.getContent_body()).isEqualTo("여기에 글 쓰기");
 

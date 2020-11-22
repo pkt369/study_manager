@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="background">
+    <link rel="stylesheet" href="/css/background.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <div class="navbar navbar-black bg-silver">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand navbar-text-black" href="/user/home">
+                    <img src="/img/study_icon.png" class="img-rounded" width="40px;" height="40px;">
+                    <strong>STUDY MANAGER 2021</strong>
+                </a>
+            </div>
+
+            <ul class="nav navbar-nav" style="margin-right: -400px;">
+                <div th:text="${name}+'님'">이름</div>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <button class="btn btn-danger navbar-btn" th:text="로그아웃" onclick="location.href='/logout'"></button>
+            </ul>
+        </div>
+    </div>
+
+    <div class="leftBar text-center">
+        <button class="btn-default btn-size changeHover todaySchedule">오늘의 스케줄</button>
+        <button class="btn-default btn-size changeHover lookAtCalendar">달력으로 보기</button>
+        <button class="btn-default btn-size changeHover createSchedule">스케줄 만들기</button>
+    </div>
+</div>

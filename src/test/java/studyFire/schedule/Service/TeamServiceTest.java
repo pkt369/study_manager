@@ -13,6 +13,7 @@ import studyFire.schedule.service.MemberService;
 import studyFire.schedule.service.ScheduleService;
 import studyFire.schedule.service.TeamService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -33,33 +34,39 @@ class TeamServiceTest {
 
 
     @Test
+    @Rollback(value = false)
     public void 팀에_스케줄_공유및_다가져오기() throws Exception {
         //given
         Member member = Member.createMember("aaa@aaa", "aaa", "세준", 24);
         Team team = Team.createTeam("팀1");
-        Schedule schedule = Schedule.createSchedule(member);
-        ScheduleContent content1 = ScheduleContent.createContent(schedule, "1", "11");
-        ScheduleContent content2 = ScheduleContent.createContent(schedule, "2", "22");
+        ScheduleContent content1 = ScheduleContent.createContent("1", "11");
+        ScheduleContent content2 = ScheduleContent.createContent("2", "22");
 
-        // 스케줄 공유
-        schedule.inputSchedule(team);
+
 
         //when
         memberService.join(member);
         //팀에 공유됨.
         teamService.save(team, member);
-        scheduleService.save(schedule);
-        scheduleService.contentSave(content1);
-        scheduleService.contentSave(content2);
+//        scheduleService.save(schedule);
+        scheduleService.contentSave(content1, member, LocalDate.now());
+        scheduleService.contentSave(content2, member, LocalDate.now());
+
+        // 스케줄 공유
+        content1.getSchedule().inputSchedule(team);
+
+        //멤버 스케줄가져오기
+        List<Schedule> memSchedule = scheduleService.findAllByMember(member);
 
 
+        //팀에서 가져온 스케줄
         List<Schedule> schedules = teamService.bringScheduleList(team);
 
         //then
-        assertThat(schedule.getMember()).isSameAs(member);
-        assertThat(scheduleService.findContent(schedule).size()).isEqualTo(2);
-        assertThat(content1.getSchedule()).isSameAs(schedule);
-        assertThat(content2.getSchedule()).isSameAs(schedule);
+        assertThat(memSchedule.get(0).getMember()).isSameAs(member);
+        assertThat(scheduleService.findContent(memSchedule.get(0)).size()).isEqualTo(2);
+//        assertThat(content1.getSchedule()).isSameAs(schedule);
+//        assertThat(content2.getSchedule()).isSameAs(schedule);
         assertThat(schedules.size()).isEqualTo(1);
     }
 

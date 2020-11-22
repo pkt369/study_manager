@@ -63,6 +63,12 @@ Test Team-Kickout메서드를 제외한 모든 Test 성공<br>
 join_team_member 일대다, 다대일 테이블 생성 => 중간에서 연결해주는 역할 <br>
 이후 전체적인 코드 수정 => Test 전체 성공 <br>
 
+<hr>
+2020-11-21 (version 0.0.42) <br>
+스케줄을 따로 생성하는것이아니라 content 영역에서 날짜에 따라 Schedule이 하나만 생성되도록 구현<br>
+로그인 SpringSecurity를 이용해 구현<br>
+스케줄 관련 사이트 background 구현<br>
+
 
 
 

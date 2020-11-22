@@ -24,11 +24,26 @@ public class ScheduleRepository {
     }
 
     public List<Schedule> findAllByMember(Member member) {
-//        LocalDate date = LocalDate.now();
-        //오늘 날짜만 가져올수있게 함.
         return em.createQuery("select s from Schedule s join fetch s.member m where m.id = :memberId",
                 Schedule.class)
                 .setParameter("memberId", member.getId())
                 .getResultList();
     }
+
+    public List<Schedule> isExistSchedule(Member member, LocalDate date) {
+        return em.createQuery("select s from Schedule s where s.member = :member and s.date = :date",
+                Schedule.class)
+                .setParameter("member", member)
+                .setParameter("date", date)
+                .getResultList();
+    }
+
+    public List<Schedule> findAllByMemberDate(Member member, LocalDate date) {
+        return em.createQuery("select s from Schedule s join fetch s.member m where m.id = :memberId and s.date = :date",
+                Schedule.class)
+                .setParameter("memberId", member.getId())
+                .setParameter("date", date)
+                .getResultList();
+    }
+
 }

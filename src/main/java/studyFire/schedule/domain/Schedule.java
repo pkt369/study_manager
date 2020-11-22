@@ -11,8 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
-public class
-Schedule {
+public class Schedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +22,6 @@ Schedule {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Column(unique = true)
     private LocalDate date;
 
     @OneToMany(mappedBy = "schedule")

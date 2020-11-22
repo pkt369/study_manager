@@ -65,6 +65,10 @@ public class Member {
         return member;
     }
 
+    public void changePassword(String password) {
+        this.password = password;
+    }
+
 
 
 }

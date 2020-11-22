@@ -13,6 +13,8 @@ import studyFire.schedule.service.MemberService;
 import studyFire.schedule.service.ScheduleService;
 import studyFire.schedule.service.TeamService;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,18 +33,17 @@ class ScheduleServiceTest {
     public void 스케줄_내용포함_만들기() throws Exception {
         //given
         Member member = Member.createMember("aaa@aaa", "aaa", "세준", 24);
-        Schedule schedule = Schedule.createSchedule(member);
-        ScheduleContent content = ScheduleContent.createContent(schedule, "세준코딩", "세준 코딩잘해...");
+        ScheduleContent content = ScheduleContent.createContent("세준코딩", "세준 코딩잘해...");
 
         //when
         memberService.join(member);
-        scheduleService.save(schedule);
-        scheduleService.contentSave(content);
+//        scheduleService.save(schedule);
+        scheduleService.contentSave(content, member, LocalDate.now());
 
         //then
         assertThat(member.getSchedules().size()).isEqualTo(1);
-        assertThat(schedule.getMember()).isSameAs(member);
-        assertThat(content.getSchedule()).isSameAs(schedule);
+        assertThat(content.getSchedule().getMember()).isSameAs(member);
+        assertThat(content.getSchedule()).isSameAs(content.getSchedule());
         assertThat(content.getContent_header()).isEqualTo("세준코딩");
 
     }
