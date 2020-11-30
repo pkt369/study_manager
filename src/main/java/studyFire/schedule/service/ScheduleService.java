@@ -81,6 +81,16 @@ public class ScheduleService {
         return scheduleRepository.todaySchedule(member);
     }
 
+    @Transactional
+    public void changeSchedule_isEnd(List<String> checkArr, List<String> uncheckArr) {
+        contentRepository.changeSchedule_isEnd(checkArr, uncheckArr);
+    }
+
+    @Transactional
+    public void changeIsEnd(String boo, String id) {
+        contentRepository.changeIsEnd(boo, id);
+    }
+
 
 
 

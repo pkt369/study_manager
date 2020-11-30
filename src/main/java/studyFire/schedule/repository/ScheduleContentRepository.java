@@ -41,6 +41,26 @@ public class ScheduleContentRepository {
                 .getResultList();
     }
 
+
+    public void changeSchedule_isEnd(List<String> checkArr, List<String> uncheckArr) {
+        for (String check : checkArr) {
+            long id = Long.parseLong(check);
+            ScheduleContent content = em.find(ScheduleContent.class, id);
+            content.changeIsEnd("true");
+        }
+        for (String uncheck : uncheckArr) {
+            long id = Long.parseLong(uncheck);
+            ScheduleContent content = em.find(ScheduleContent.class, id);
+            content.changeIsEnd("false");
+        }
+    }
+
+    public void changeIsEnd(String boo, String bringId) {
+        long id = Long.parseLong(bringId);
+        ScheduleContent content = em.find(ScheduleContent.class, id);
+        content.changeIsEnd(boo);
+    }
+
 //    public List<ScheduleContent> findContextWithMemberDate(Member member, Date date)
 
 }

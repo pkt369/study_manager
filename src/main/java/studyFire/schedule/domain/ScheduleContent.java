@@ -22,6 +22,7 @@ public class ScheduleContent {
     private String content_header;
     private String content_body;
 
+    @Column(columnDefinition = "varchar(5) default 'false'")
     private String isEnd;
 
     private LocalDateTime createAt;
@@ -35,6 +36,10 @@ public class ScheduleContent {
     }
 
     private void setIsEnd(String isEnd) {
+        this.isEnd = isEnd;
+    }
+
+    public void changeIsEnd(String isEnd) {
         this.isEnd = isEnd;
     }
 

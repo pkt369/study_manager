@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>Study Manager</title>
     <link rel="stylesheet" href="/css/util.css">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
 <th:block th:replace="schedule/navbar :: navbar"/>
 
@@ -17,34 +19,142 @@
 
 <div class="container-fix m-t-50">
     <div class="container">
-        <div class="progress text-center ">
-            <div class="progress-bar progress-bar-info m-b-20" role="progressbar" aria-valuenow="50"
-                 aria-valuemin="0" aria-valuemax="100" style="width:50%; height: 100px;">
-                50% Complete (info)
-            </div>
+<!--        <div class="progress text-center m-b-20">-->
+<!--            <div class="progress-bar progress-bar-info " role="progressbar" aria-valuenow="50"-->
+<!--                 aria-valuemin="0" aria-valuemax="100" style="width:50%; height: 100px;">-->
+<!--                50% Complete (info)-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="m-t-20"></div>-->
+
+
+        <div th:each="schedule : ${schedules}" class="make-jumbotron">
+
+            <input type="checkbox" th:id="${schedule.id}" name="checkCheckbox" th:value="${schedule.id}"
+                   th:if="${schedule.isEnd == 'true'}" checked>
+            <input type="checkbox" th:id="${schedule.id}" name="checkCheckbox" th:value="${schedule.id}"
+                   th:if="${schedule.isEnd == 'false'}" >
+
+            <label th:for="${schedule.id}" th:text="'&nbsp&nbsp&nbsp&nbsp' + ${schedule.content_header} + '  :  ' + ${schedule.content_body}"
+                   class="font-weight-bold fs-20 m-l-30"></label>
         </div>
 
-        <div th:each="schedule : ${schedules}" class="outline-black jumbotron">
-            <input type="checkbox" th:id="${schedule.id}">
-            <label th:for="${schedule.id}" th:text="'&nbsp&nbsp&nbsp&nbsp' + ${schedule.content_header} + '  :  ' + ${schedule.content_body}"
-                   class="font-weight-bold fs-20 m-l-30">활성화 여부</label>
-        </div>
     </div>
 </div>
 
 <style>
     .todaySchedule{
-        background-color: #1b1e21;
+        background-color: #2e3133;
         color: white;
     }
 
     .outline-black{
-        background-color: #545b62;
+        background-color: #e9ecef;
         color: white;
         padding: 20px 20px 20px 20px;
+        border-radius: .3rem;
+        margin: 20px 0;
+    }
+
+    .make-jumbotron{
+        background-color: #1d2124;
+        color: white;
+        padding: 20px 20px 20px 20px;
+        border-radius: .3rem;
+        margin: 20px 0;
 
     }
 </style>
+
+<script>
+    // window.onbeforeunload = checkboxArr();
+    window.onbeforeunload = function () {
+        checkboxArr();
+        return null;
+    };
+
+
+
+    function checkboxArr() {
+        var checkArr = [];     // 배열 초기화
+        var uncheckArr = [];
+        var count = 0;
+
+        if(checkArr.length == 0){
+            checkArr.push("$(this).val()");
+            uncheckArr.push("$(this).val()");
+        }
+
+        $("input[name=checkCheckbox]:checked").each(function(i){
+            checkArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+        });
+
+        $("input[name=checkCheckbox]:checkbox:not(:checked)").each(function(i){
+            uncheckArr.push($(this).val());     // 체크 안된 것만 값을 뽑아서 배열에 push
+
+        });
+        console.log("checkArr : " + checkArr.length);
+        console.log("uncheckArr : " + uncheckArr.length);
+
+        var allDate = {
+            checkArr : checkArr,
+            uncheckArr : uncheckArr
+        }
+
+
+        $.ajax({
+            url: '/changeCheckboxStatus'
+            , type: 'get'
+            , dataType: 'text'
+            , data: allDate
+            // , success: function (i) {
+            //
+            // }
+            ,error:function(request, error){
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        });
+    }
+
+
+    // function changeCheckBox(id){
+    //
+    //     var form = {
+    //         status : "true",
+    //         id : id
+    //     }
+    //
+    //     if($("input:checkbox[name=checkCheckbox]").is(":checked")){
+    //
+    //         $.ajax({
+    //             url: '/changeCheckboxStatus'
+    //             , type: 'POST'
+    //             , data: form
+    //             , success: function (i) {
+    //                 alert("성공");
+    //             }
+    //             ,error:function(request, error){
+    //                 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    //             }
+    //         });
+    //     }else{
+    //         alert("dd");
+    //         $.ajax({
+    //             url: '/user/todaySchedule'
+    //             , type: 'post'
+    //             , dataType: 'text'
+    //             , data: {
+    //                 checkbox : "false",
+    //                 id : id
+    //             }
+    //         });
+    //     }
+    //
+    // }
+
+
+</script>
 
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Study Manager</title>
-
+    <link rel="stylesheet" href="/css/calendar.css">
 </head>
 <body>
 
@@ -15,7 +15,102 @@
         <button class="btn-default btn-size changeHover createSchedule" onclick="location.href='/user/createSchedule'">스케줄 만들기</button>
     </div>
     <div class="container text-center">
+        <div class="calendar" >
 
+<!--            &lt;!&ndash;날짜 네비게이션  &ndash;&gt;-->
+<!--            <div class="navigation">-->
+<!--                <a class="before_after_year" th:href="@{/calendar(year=${today_info. - 1},month=${today_info.search_month - 1})}">-->
+<!--                    &lt;&lt;-->
+<!--                    &lt;!&ndash; 이전해 &ndash;&gt;-->
+<!--                </a>-->
+<!--                <a class="before_after_month" th:href="@{/calendar(year=${today_info.before_year},month=${today_info.before_month})}">-->
+<!--                    &lt;-->
+<!--                    &lt;!&ndash; 이전달 &ndash;&gt;-->
+<!--                </a>-->
+<!--                <span class="this_month" th:text="${today_info.search_year}">-->
+<!--                    &nbsp;-->
+<!--                    <p th:if="${today_info.search_month < 10}" th:text="${today_info.search_month}">0</p>-->
+<!--		        </span>-->
+<!--                <a class="before_after_month" th:href="@{/calendar(year=${today_info.after_year},month=${today_info.after_month})}">-->
+<!--                    &lt;!&ndash; 다음달 &ndash;&gt;-->
+<!--                    &gt;-->
+<!--                </a>-->
+<!--                <a class="before_after_year" th:href="@{/calendar(year=${today_info.after_year + 1},month=${today_info.after_month - 1})}">-->
+<!--                    &lt;!&ndash; 다음해 &ndash;&gt;-->
+<!--                    &gt;&gt;-->
+<!--                </a>-->
+<!--            </div>-->
+
+            <!-- <div class="today_button_div"> -->
+            <!-- <input type="button" class="today_button" onclick="javascript:location.href='/calendar.do'" value="go today"/> -->
+            <!-- </div> -->
+            <table class="calendar_body">
+
+                <thead>
+                <tr bgcolor="#CECECE">
+                    <td class="day sun" >
+                        일
+                    </td>
+                    <td class="day" >
+                        월
+                    </td>
+                    <td class="day" >
+                        화
+                    </td>
+                    <td class="day" >
+                        수
+                    </td>
+                    <td class="day" >
+                        목
+                    </td>
+                    <td class="day" >
+                        금
+                    </td>
+                    <td class="day sat" >
+                        토
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <div th:each="date : ${dateList}">
+                        <span th:if="${date.value == 'today'}">
+                            <td class="today">
+                                <div class="date" th:text="${date.date}"></div>
+                                <div>
+                                </div>
+                            </td>
+                        </span>
+                        <span th:if="${dateStat.index % 7 == 6}">
+                            <td class="sat_day">
+                                <div class="sat" th:text="${date.date}"></div>
+                                <div>
+                                </div>
+                            </td>
+                        </span>
+<!--                </tr>-->
+<!--                <tr>-->
+                        <span th:if="${dateStat.index % 7 == 0}">
+                            <td class="sun_day">
+                                <div class="sun" th:text="${date.date}"></div>
+                                <div>
+                                </div>
+                            </td>
+                        </span>
+                        <span th:if="${date.value == 'normal_day'}">
+                            <td class="normal_day">
+                                <div class="date" th:text="${date.date}"></div>
+                                <div>
+                                </div>
+                            </td>
+                        </span>
+                    </div>
+                </tr>
+
+                </tbody>
+
+            </table>
+        </div>
     </div>
 </div>
 
