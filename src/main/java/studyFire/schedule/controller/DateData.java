@@ -2,10 +2,12 @@ package studyFire.schedule.controller;
 
 import lombok.Getter;
 import lombok.Setter;
+import studyFire.schedule.domain.ScheduleContent;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Getter @Setter
@@ -20,8 +22,7 @@ public class DateData {
 	//		2. getter/setter 추가
 	//		3. 생성자 추가
 	//				하여 사용하면 보다 편리하고 깨끗하게 코드를 만들 수 있다.
-	String schedule = "";
-	String schedule_detail = "";
+	List<ScheduleContent> content;
 
 
 	// 날짜에 관련된 달력정보를 가지는 메서드
@@ -99,14 +100,13 @@ public class DateData {
 	}
 	
 	// 스케줄 사용시 사용될 생성자
-	public DateData(String year, String month, String date, String value, String schedule, String schedule_detail) {
+	public DateData(String year, String month, String date, String value, List<ScheduleContent> content) {
 
 		this.year = year;
 		this.month = month;
 		this.date = date;
 		this.value = value;
-		this.schedule = schedule;
-		this.schedule_detail = schedule_detail;
+		this.content = content;
 
 	}
 

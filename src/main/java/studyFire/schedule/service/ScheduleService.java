@@ -1,6 +1,7 @@
 package studyFire.schedule.service;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import studyFire.schedule.domain.Member;
@@ -86,9 +87,13 @@ public class ScheduleService {
         contentRepository.changeSchedule_isEnd(checkArr, uncheckArr);
     }
 
-    @Transactional
+    /*@Transactional
     public void changeIsEnd(String boo, String id) {
         contentRepository.changeIsEnd(boo, id);
+    }*/
+
+    public List<ScheduleContent> findScheduleByDate(LocalDate date) {
+        return contentRepository.findScheduleByDate(date);
     }
 
 

@@ -71,12 +71,12 @@ public class ScheduleController {
 //    }
 
 
-    @GetMapping("/user/calendar")
-    public String calendar(Model model, Principal principal) {
-        Member member = memberService.findByEmail(principal.getName());
-        model.addAttribute("name", member.getName());
-        return "/schedule/calendar";
-    }
+//    @GetMapping("/user/calendar")
+//    public String calendar(Model model, Principal principal) {
+//        Member member = memberService.findByEmail(principal.getName());
+//        model.addAttribute("name", member.getName());
+//        return "/schedule/calendar";
+//    }
 
 
 }

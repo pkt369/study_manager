@@ -55,11 +55,17 @@ public class ScheduleContentRepository {
         }
     }
 
-    public void changeIsEnd(String boo, String bringId) {
+    public List<ScheduleContent> findScheduleByDate(LocalDate date) {
+        return em.createQuery("select c from ScheduleContent c join fetch Schedule s where s.date = :date",ScheduleContent.class)
+                .setParameter("date", date)
+                .getResultList();
+    }
+
+    /*public void changeIsEnd(String boo, String bringId) {
         long id = Long.parseLong(bringId);
         ScheduleContent content = em.find(ScheduleContent.class, id);
         content.changeIsEnd(boo);
-    }
+    }*/
 
 //    public List<ScheduleContent> findContextWithMemberDate(Member member, Date date)
 
