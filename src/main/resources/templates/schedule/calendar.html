@@ -20,6 +20,9 @@
         <button class="btn-default btn-size changeHover createSchedule" onclick="location.href='/user/createSchedule'">
             스케줄 만들기
         </button>
+        <button class="btn-default btn-size changeHover administrateSchedule" onclick="location.href='/user/administrateSchedule'">
+            스케줄 관리하기
+        </button>
     </div>
     <div class="container text-center">
         <div class="calendar">
@@ -85,118 +88,411 @@
                     <div th:each="date : ${dateList}" th:if="${dateStat.index / 7 == 0}">
                         <td th:if="${date.value == 'today'}" class="today">
                             <div class="date" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${dateStat.index % 7 == 6}" class="sat_day">
                             <div class="sat" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${dateStat.index % 7 == 0}" class="sun_day">
                             <div class="sun" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${date.value != 'today' && dateStat.index % 7 != 6 && dateStat.index % 7 != 0}" class="normal_day">
                             <div class="date" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
                     </div>
                 </tr>
+                <!------------------------------------------------------------------------>
 
                 <tr>
                     <div th:each="date : ${dateList}" th:if="${dateStat.index / 7 == 1}">
                         <td th:if="${date.value == 'today'}" class="today">
                             <div class="date" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${dateStat.index % 7 == 6}" class="sat_day">
                             <div class="sat" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${dateStat.index % 7 == 0}" class="sun_day">
                             <div class="sun" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${date.value != 'today' && dateStat.index % 7 != 6 && dateStat.index % 7 != 0}" class="normal_day">
                             <div class="date" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
                     </div>
                 </tr>
+                <!------------------------------------------------------------------------------->
 
                 <tr>
                     <div th:each="date : ${dateList}" th:if="${dateStat.index / 7 == 2}">
                         <td th:if="${date.value == 'today'}" class="today">
                             <div class="date" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${dateStat.index % 7 == 6}" class="sat_day">
                             <div class="sat" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${dateStat.index % 7 == 0}" class="sun_day">
                             <div class="sun" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${date.value != 'today' && dateStat.index % 7 != 6 && dateStat.index % 7 != 0}" class="normal_day">
                             <div class="date" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
                     </div>
                 </tr>
+                <!-------------------------------------------------------------------------------->
 
                 <tr>
                     <div th:each="date : ${dateList}" th:if="${dateStat.index / 7 == 3}">
                         <td th:if="${date.value == 'today'}" class="today">
                             <div class="date" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${dateStat.index % 7 == 6}" class="sat_day">
                             <div class="sat" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${dateStat.index % 7 == 0}" class="sun_day">
                             <div class="sun" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${date.value != 'today' && dateStat.index % 7 != 6 && dateStat.index % 7 != 0}" class="normal_day">
                             <div class="date" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
                     </div>
                 </tr>
+                <!--------------------------------------------------------------------------------------------->
 
                 <tr>
                     <div th:each="date : ${dateList}" th:if="${dateStat.index / 7 == 4}">
                         <td th:if="${date.value == 'today'}" class="today">
                             <div class="date" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${dateStat.index % 7 == 6}" class="sat_day">
                             <div class="sat" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${dateStat.index % 7 == 0}" class="sun_day">
                             <div class="sun" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${date.value != 'today' && dateStat.index % 7 != 6 && dateStat.index % 7 != 0}" class="normal_day">
                             <div class="date" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
                     </div>
                 </tr>
+                <!------------------------------------------------------------------------>
 
                 <tr>
                     <div th:each="date : ${dateList}" th:if="${dateStat.index / 7 == 5}">
                         <td th:if="${date.value == 'today'}" class="today">
                             <div class="date" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${dateStat.index % 7 == 6}" class="sat_day">
                             <div class="sat" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${dateStat.index % 7 == 0}" class="sun_day">
                             <div class="sun" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                         <td th:if="${date.value != 'today' && dateStat.index % 7 != 6 && dateStat.index % 7 != 0}" class="normal_day">
                             <div class="date" th:text="${date.date}"></div>
+
+                            <div th:each="content : ${date.getContent()}">
+                                <div th:if="${contentStat.index < 4}">
+                                    <div th:if="${content.isEnd == 'true'}" class="true-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">
+                                    </div>
+                                    <div th:if="${content.isEnd == 'false'}" class="false-text"
+                                         th:text="${content.content_header} + '  :  ' + ${content.content_body}">>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
                     </div>
                 </tr>

@@ -57,7 +57,9 @@ public class CalendarController {
 			* 스케줄 가져오기
 			* */
 			LocalDate date = LocalDate.of(today_info.get("search_year"), today_info.get("search_month"), i);
+			System.out.println("date = " + date);
 			List<ScheduleContent> scheduleByDate = scheduleService.findScheduleByDate(date);
+
 
 			if(i==today_info.get("today")){
 				if (scheduleByDate.isEmpty()) {
@@ -93,9 +95,7 @@ public class CalendarController {
 		Member member = memberService.findByEmail(principal.getName());
         model.addAttribute("name", member.getName());
 
-        /*
-        * 스케줄 가져오기
-        * */
+
 
 
 		

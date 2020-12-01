@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Study Manager</title>
+
+</head>
+<body>
+
+<th:block th:replace="schedule/navbar :: navbar"/>
+<div class="container-fix">
+    <div class="leftBar text-center">
+        <button class="btn-default btn-size changeHover todaySchedule" onclick="location.href='/user/todaySchedule'">오늘의 스케줄</button>
+        <button class="btn-default btn-size changeHover lookAtCalendar" onclick="location.href='/user/calendar'">달력으로 보기</button>
+        <button class="btn-default btn-size changeHover createSchedule" onclick="location.href='/user/createSchedule'">스케줄 만들기</button>
+        <button class="btn-default btn-size changeHover administrateSchedule" onclick="location.href='/user/administrateSchedule'">
+            스케줄 관리하기
+        </button>
+    </div>
+    <div class="container text-center">
+        <div class="m-t-30 font-weight-bold">관리할 스케줄의 날짜를 선택해주세요.</div>
+
+        <form class="text-center m-t-30">
+            <input type="date" class="input-type-date m-r-20" placeholder="YYYY-MM-DD" id="inputDate" name="inputDate">
+            <button class="btn btn-dark btn-lg" id="save_btn" value="검색하기"
+                onclick="findScheduleContextWithAjax()">검색하기</button>
+        </form>
+
+        <div class="m-t-50">
+            <div id="result"></div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    html, body { height:100%; }
+    .administrateSchedule{
+        background-color: #1b1e21;
+        color: white;
+    }
+
+    .blackline{
+        border: 1px solid black;
+    }
+
+    .input-type-date{
+        /*display: block;*/
+        width: 30%;
+        height: calc(1.5em + .75rem + 2px);
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
+    }
+
+    .saveButton{
+        width: 200px;
+        height: 70px;
+        color: white;
+    }
+
+</style>
+
+<script>
+
+
+    function findScheduleContextWithAjax() {
+        var bringDate = $("#inputDate").val();
+
+
+        if (bringDate == "") {
+            alert("날짜를 적어주세요.");
+            return false;
+        }
+        alert("여기");
+        $.ajax({
+            url: '/bringSchedule'
+            , type: 'get'
+            , dataType: 'json'
+            , data: {
+                bringDate : bringDate
+            }
+            , success: function (scheduleList) {
+                alert("d");
+                var result = scheduleList.json;
+
+
+                $.each(result , function(idx, val) {
+                    console.log(idx + " " + val.title);
+                });
+                // for (var i = 0; i < scheduleList.size(); i++) {
+                //     var header = scheduleList.get(i).getContent_header();
+                //     var body = scheduleList.get(i).getContent_body();
+                //     $("#result").text(header + "-" + body);
+                //     $("#result").html("<br>");
+                // }
+            }
+            ,error:function(request, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
+        });
+    }
+</script>
+</body>
+</html>

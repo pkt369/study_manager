@@ -64,7 +64,7 @@ A:hover { font-size:9pt; font-family:"돋움";color:red;text-decoration:none;}*/
 }
 .calendar_body .today{
     border:1px solid white;
-    height:130px;
+    height:120px;
     background-color:#c9c9c9;
     text-align: left;
     vertical-align: top;
@@ -77,7 +77,7 @@ A:hover { font-size:9pt; font-family:"돋움";color:red;text-decoration:none;}*/
 }
 .calendar_body .sat_day{
     border:1px solid white;
-    height:130px;
+    height:120px;
     background-color:#EFEFEF;
     text-align:left;
     vertical-align: top;
@@ -91,7 +91,7 @@ A:hover { font-size:9pt; font-family:"돋움";color:red;text-decoration:none;}*/
 }
 .calendar_body .sun_day{
     border:1px solid white;
-    height:130px;
+    height:120px;
     background-color:#EFEFEF;
     text-align: left;
     vertical-align: top;
@@ -105,7 +105,7 @@ A:hover { font-size:9pt; font-family:"돋움";color:red;text-decoration:none;}*/
 }
 .calendar_body .normal_day{
     border:1px solid white;
-    height:130px;
+    height:120px;
     background-color:#EFEFEF;
     vertical-align: top;
     text-align: left;
@@ -119,4 +119,12 @@ A:hover { font-size:9pt; font-family:"돋움";color:red;text-decoration:none;}*/
 }
 .this_month{
     margin: 10px;
+}
+
+.true-text{
+    color: green;
+}
+
+.false-text {
+    color: #721c24;
 }

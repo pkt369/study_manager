@@ -1,6 +1,7 @@
 package studyFire.schedule.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.json.JsonParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,10 @@ import studyFire.schedule.service.MemberService;
 import studyFire.schedule.service.ScheduleService;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -51,7 +55,6 @@ public class ScheduleController {
     @ResponseBody
     public String checkCheckbox(@RequestParam(value = "checkArr[]", required = false) List<String> checkArr,
                                 @RequestParam(value = "uncheckArr[]", required = false) List<String> uncheckArr) {
-        System.out.println("여기옴");
         System.out.println("checkArr = " + checkArr.get(0));
         System.out.println("uncheckArr = " + uncheckArr.get(0));
         //이렇게하는 이유는 빈 배열을 넘겨줄때 500에러를 내기때문이다.
@@ -60,6 +63,31 @@ public class ScheduleController {
         uncheckArr.remove(0);
         scheduleService.changeSchedule_isEnd(checkArr, uncheckArr);
         return "home";
+    }
+
+    @GetMapping("/user/administrateSchedule")
+    public String administrateSchedulePage(Model model, Principal principal) {
+        Member member = memberService.findByEmail(principal.getName());
+
+        model.addAttribute("name", member.getName());
+        return "/schedule/administrateSchedule";
+    }
+
+    @RequestMapping(value = "/bringSchedule", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<Integer, Object> bringSchedule(@RequestParam(value = "bringDate")String date) {
+        Map<Integer, Object> list = new HashMap<>();
+
+        LocalDate parseDate = LocalDate.parse(date);
+        System.out.println("parseDate = " + parseDate);
+        List<ScheduleContent> scheduleByDate = scheduleService.findScheduleByDate(parseDate);
+        System.out.println("scheduleByDate.size() = " + scheduleByDate.size());
+
+        for (int i = 0; i < scheduleByDate.size(); i++) {
+            list.put(i, scheduleByDate.get(i));
+        }
+
+        return list;
     }
 
 //    @RequestMapping(value = "/changeCheckboxStatus", method = RequestMethod.POST)

@@ -7,6 +7,7 @@ import studyFire.schedule.domain.Schedule;
 import studyFire.schedule.domain.ScheduleContent;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TemporalType;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -56,7 +57,7 @@ public class ScheduleContentRepository {
     }
 
     public List<ScheduleContent> findScheduleByDate(LocalDate date) {
-        return em.createQuery("select c from ScheduleContent c join fetch Schedule s where s.date = :date",ScheduleContent.class)
+        return em.createQuery("select c from ScheduleContent c join fetch c.schedule s where s.date = :date",ScheduleContent.class)
                 .setParameter("date", date)
                 .getResultList();
     }

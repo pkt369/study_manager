@@ -45,6 +45,11 @@
     <div class="footer">
         <div class="container">
             <div class="study-wise-saying"><strong>오늘의 스케줄</strong></div>
+            <div th:each="schedule : ${schedules}">
+                <div th:if="${scheduleStat.index < 5}" class="schedule-today-text"
+                     th:text="${schedule.content_header}
+                     + '  :  ' + ${schedule.content_body}"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -94,6 +99,14 @@
         margin: 20px;
         font-size: 25px;
     }
+
+    .schedule-today-text {
+        margin: 15px 15px 15px 0px;
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+
 
 
 

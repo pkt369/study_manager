@@ -24,7 +24,7 @@ public class Schedule {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+
     private LocalDate date;
 
     @OneToMany(mappedBy = "schedule")

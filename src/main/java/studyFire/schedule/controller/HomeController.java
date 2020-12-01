@@ -10,16 +10,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import studyFire.schedule.domain.Member;
+import studyFire.schedule.domain.ScheduleContent;
 import studyFire.schedule.domain.form.MemberForm;
 import studyFire.schedule.service.MemberService;
+import studyFire.schedule.service.ScheduleService;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
 
     private final MemberService memberService;
+    private final ScheduleService scheduleService;
 
     @GetMapping("/")
     public String home() {
@@ -52,8 +56,11 @@ public class HomeController {
 
     @GetMapping("/user/home")
     public String userHome(Model model, Principal principal) {
-        Member byEmail = memberService.findByEmail(principal.getName());
-        model.addAttribute("name", byEmail.getName());
+        Member member = memberService.findByEmail(principal.getName());
+        List<ScheduleContent> scheduleContents = scheduleService.todaySchedule(member);
+
+        model.addAttribute("schedules", scheduleContents);
+        model.addAttribute("name", member.getName());
         return "main/afterHome";
     }
 }
