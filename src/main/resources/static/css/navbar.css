@@ -60,17 +60,8 @@ html, body { height:100%; }
     margin-top: 50px;
 }
 
-input[type=checkbox] { display:none; }
 
-input[type=checkbox] + label {
-    display: inline-block;
-    cursor: pointer;
-    line-height: 24px;
-    padding-left: 24px;
-    background: url('/img/unchecked.png') left/24px no-repeat;
-}
 
-input[type=checkbox]:checked + label { background-image: url('/img/checked.png'); }
 
 .header-img{
     width: 20px;

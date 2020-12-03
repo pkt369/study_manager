@@ -96,6 +96,12 @@ public class ScheduleService {
         return contentRepository.findScheduleByDate(date);
     }
 
+    @Transactional
+    public void deleteSchedule(String id) {
+        long parseId = Long.parseLong(id);
+        contentRepository.deleteSchedule(parseId);
+    }
+
 
 
 

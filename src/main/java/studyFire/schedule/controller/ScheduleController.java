@@ -1,6 +1,8 @@
 package studyFire.schedule.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.boot.json.JsonParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,8 +57,6 @@ public class ScheduleController {
     @ResponseBody
     public String checkCheckbox(@RequestParam(value = "checkArr[]", required = false) List<String> checkArr,
                                 @RequestParam(value = "uncheckArr[]", required = false) List<String> uncheckArr) {
-        System.out.println("checkArr = " + checkArr.get(0));
-        System.out.println("uncheckArr = " + uncheckArr.get(0));
         //이렇게하는 이유는 빈 배열을 넘겨줄때 500에러를 내기때문이다.
         //무조건 배열이 하나 있도록 한뒤 controller에서 없애주면 아무 이상 X
         checkArr.remove(0);
@@ -75,20 +75,82 @@ public class ScheduleController {
 
     @RequestMapping(value = "/bringSchedule", method = RequestMethod.GET)
     @ResponseBody
-    public Map<Integer, Object> bringSchedule(@RequestParam(value = "bringDate")String date) {
-        Map<Integer, Object> list = new HashMap<>();
+    public String bringSchedule(@RequestParam(value = "bringDate")String date) {
 
         LocalDate parseDate = LocalDate.parse(date);
         System.out.println("parseDate = " + parseDate);
         List<ScheduleContent> scheduleByDate = scheduleService.findScheduleByDate(parseDate);
         System.out.println("scheduleByDate.size() = " + scheduleByDate.size());
 
+        JSONArray ja = new JSONArray();
+
         for (int i = 0; i < scheduleByDate.size(); i++) {
-            list.put(i, scheduleByDate.get(i));
+            JSONObject jo = new JSONObject();
+            jo.put("id", scheduleByDate.get(i).getId());
+            jo.put("header", scheduleByDate.get(i).getContent_header());
+            jo.put("body", scheduleByDate.get(i).getContent_body());
+            jo.put("isEnd", scheduleByDate.get(i).getIsEnd());
+            ja.add(jo);
+        }
+        return ja.toJSONString();
+    }
+
+    @RequestMapping(value = "/deleteSchedule", method = RequestMethod.GET)
+    @ResponseBody
+    public String deleteSchedule(@RequestParam(value = "bringDate")String date,
+                                 @RequestParam(value = "bringId")String bringId) {
+        //삭제
+        scheduleService.deleteSchedule(bringId);
+
+        //조회
+        LocalDate parseDate = LocalDate.parse(date);
+        System.out.println("parseDate = " + parseDate);
+        List<ScheduleContent> scheduleByDate = scheduleService.findScheduleByDate(parseDate);
+        System.out.println("scheduleByDate.size() = " + scheduleByDate.size());
+
+        JSONArray ja = new JSONArray();
+
+        for (int i = 0; i < scheduleByDate.size(); i++) {
+            JSONObject jo = new JSONObject();
+            jo.put("id", scheduleByDate.get(i).getId());
+            jo.put("header", scheduleByDate.get(i).getContent_header());
+            jo.put("body", scheduleByDate.get(i).getContent_body());
+            jo.put("isEnd", scheduleByDate.get(i).getIsEnd());
+            ja.add(jo);
+        }
+        return ja.toJSONString();
+    }
+
+    @RequestMapping(value = "/saveSchedule", method = RequestMethod.GET)
+    @ResponseBody
+    public String saveSchedule(@RequestParam(value = "bringDate")String date,
+                                 @RequestParam(value = "arr")List<String> scheduleList) {
+        //저장
+        System.out.println(scheduleList.size());
+        for (String s : scheduleList) {
+            System.out.println(s);
         }
 
-        return list;
+        //조회
+        LocalDate parseDate = LocalDate.parse(date);
+        System.out.println("parseDate = " + parseDate);
+        List<ScheduleContent> scheduleByDate = scheduleService.findScheduleByDate(parseDate);
+        System.out.println("scheduleByDate.size() = " + scheduleByDate.size());
+
+        JSONArray ja = new JSONArray();
+
+        for (int i = 0; i < scheduleByDate.size(); i++) {
+            JSONObject jo = new JSONObject();
+            jo.put("id", scheduleByDate.get(i).getId());
+            jo.put("header", scheduleByDate.get(i).getContent_header());
+            jo.put("body", scheduleByDate.get(i).getContent_body());
+            jo.put("isEnd", scheduleByDate.get(i).getIsEnd());
+            ja.add(jo);
+        }
+        return ja.toJSONString();
     }
+
+
 
 //    @RequestMapping(value = "/changeCheckboxStatus", method = RequestMethod.POST)
 //    @ResponseBody

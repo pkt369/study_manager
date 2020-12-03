@@ -61,4 +61,11 @@ public class ScheduleContent {
 
         return content;
     }
+
+    //==기능 메서드==//
+    public void changeScheduleContent(String content_header, String content_body, String isEnd) {
+        this.content_header = content_header;
+        this.content_body = content_body;
+        this.isEnd = isEnd;
+    }
 }

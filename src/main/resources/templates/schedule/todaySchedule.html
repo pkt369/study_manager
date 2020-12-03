@@ -68,6 +68,17 @@
         margin: 20px 0;
 
     }
+    input[type=checkbox] { display:none; }
+
+    input[type=checkbox] + label {
+        display: inline-block;
+        cursor: pointer;
+        line-height: 24px;
+        padding-left: 24px;
+        background: url('/img/unchecked.png') left/24px no-repeat;
+    }
+
+    input[type=checkbox]:checked + label { background-image: url('/img/checked.png'); }
 </style>
 
 <script>
@@ -82,7 +93,6 @@
     function checkboxArr() {
         var checkArr = [];     // 배열 초기화
         var uncheckArr = [];
-        var count = 0;
 
         if(checkArr.length == 0){
             checkArr.push("$(this).val()");
@@ -97,8 +107,6 @@
             uncheckArr.push($(this).val());     // 체크 안된 것만 값을 뽑아서 배열에 push
 
         });
-        console.log("checkArr : " + checkArr.length);
-        console.log("uncheckArr : " + uncheckArr.length);
 
         var allDate = {
             checkArr : checkArr,

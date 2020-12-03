@@ -62,6 +62,11 @@ public class ScheduleContentRepository {
                 .getResultList();
     }
 
+    public void deleteSchedule(Long id) {
+        ScheduleContent content = em.find(ScheduleContent.class, id);
+        em.remove(content);
+    }
+
     /*public void changeIsEnd(String boo, String bringId) {
         long id = Long.parseLong(bringId);
         ScheduleContent content = em.find(ScheduleContent.class, id);
