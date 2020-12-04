@@ -14,6 +14,7 @@ import studyFire.schedule.repository.TeamRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -100,6 +101,14 @@ public class ScheduleService {
     public void deleteSchedule(String id) {
         long parseId = Long.parseLong(id);
         contentRepository.deleteSchedule(parseId);
+    }
+
+    @Transactional
+    public void ChangeSchedule(List<Map<String, String>> mapList) {
+        for (int i = 0; i < mapList.size(); i++) {
+            ScheduleContent content = contentRepository.findOne(Long.parseLong(mapList.get(i).get("id")));
+            content.changeScheduleContent(mapList.get(i).get("header"), mapList.get(i).get("body"), mapList.get(i).get("isEnd"));
+        }
     }
 
 

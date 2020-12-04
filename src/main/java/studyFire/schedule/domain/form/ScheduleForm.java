@@ -13,4 +13,7 @@ public class ScheduleForm {
     private LocalDate date;
     private String content_header;
     private String content_body;
+
+    private String isEnd;
+    private Long id;
 }

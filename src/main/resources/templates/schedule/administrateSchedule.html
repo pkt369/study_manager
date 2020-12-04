@@ -150,7 +150,6 @@
     function findScheduleContextWithAjax() {
         var bringDate = $("#inputDate").val();
 
-
         if (bringDate == "") {
             alert("날짜를 적어주세요.");
             return false;
@@ -164,10 +163,16 @@
             }
             , success: function (scheduleList) {
                 var parse = JSON.parse(scheduleList);
-                var idList = [];
+                var idList = "";
+                for (let i = 0; i < parse.length; i++) {
+                    if (i !== 0) {
+                        idList += ",";
+                    }
+                    const id = parse[i]['id'];
+                    idList += id;
+                }
                 var html = "";
                 for (var i = 0; i < parse.length; i++) {
-                    idList.push(parse[i]['id']);
                     html+="<div class='m-b-20'>";
                     if (parse[i]['isEnd'] === 'true') {
                         html += "<input type='checkbox' id='" + parse[i]['id'] + "' name='" + parse[i]['id'] +
@@ -177,15 +182,15 @@
                             "' class='btn-checkbox'>"
                     }
                     html += "<label for='" + parse[i]['id'] +"'>"
-                    html += "<input type='text' value='" + parse[i]['header'] + "' style='margin-left: 10px;' class='input-type-text'>";
+                    html += "<input type='text' value='" + parse[i]['header'] + "' style='margin-left: 10px;' class='input-type-text' name='" + parse[i]['id'] + "-header'>";
                     html += "<strong>   -   </strong>";
-                    html += "<input type='text' value='" + parse[i]['body'] + "' class='input-type-text'>";
+                    html += "<input type='text' value='" + parse[i]['body'] + "' class='input-type-text' name='" + parse[i]['id'] + "-body'>";
                     html += "<input type='button' value='삭제' style='margin-left: 20px;' class='btn btn-danger' onclick='deleteSchedule(" + parse[i]['id'] + ")'></label>"
 
                     html += "</div>"
 
                 }
-                html += "<input type='submit' value='저장하기' class='btn btn-dark btn-lg m-t-40' onclick='saveSchedule("+ idList +")'>"
+                html += "<input type='button' value='저장하기' class='btn btn-dark btn-lg m-t-40' onclick='saveSchedule("+ idList +")' name='saveButton'>"
                 $("#result").html(html);
 
             }
@@ -193,11 +198,11 @@
                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
             }
         });
+
     }
 
     function deleteSchedule(bringId) {
         var bringDate = $("#inputDate").val();
-
 
         if (bringDate == "") {
             alert("날짜를 적어주세요.");
@@ -213,11 +218,18 @@
             }
             , success: function (scheduleList) {
                 var parse = JSON.parse(scheduleList);
-                alert(parse)
-                var idList = [];
+
+                var idList = "";
+                for (let i = 0; i < parse.length; i++) {
+                    if (i !== 0) {
+                        idList += ",";
+                    }
+                    const id = parse[i]['id'];
+                    idList += id;
+                }
+
                 var html = "";
                 for (var i = 0; i < parse.length; i++) {
-                    idList.push(parse[i]['id']);
                     html+="<div class='m-b-20'>";
                     if (parse[i]['isEnd'] === 'true') {
                         html += "<input type='checkbox' id='" + parse[i]['id'] + "' name='checkCheckbox'" +
@@ -227,15 +239,15 @@
                             " class='btn-checkbox'>"
                     }
                     html += "<label for='" + parse[i]['id'] +"'>"
-                    html += "<input type='text' value='" + parse[i]['header'] + "' style='margin-left: 10px;' class='input-type-text' name='" + parse[i]['id'] + " header'>";
+                    html += "<input type='text' value='" + parse[i]['header'] + "' style='margin-left: 10px;' class='input-type-text' name='" + parse[i]['id'] + "-header'>";
                     html += "<strong>   -   </strong>";
-                    html += "<input type='text' value='" + parse[i]['body'] + "' class='input-type-text' name='" + parse[i]['id'] + " body'>";
+                    html += "<input type='text' value='" + parse[i]['body'] + "' class='input-type-text' name='" + parse[i]['id'] + "-body'>";
                     html += "<input type='button' value='삭제' style='margin-left: 20px;' class='btn btn-danger' onclick='deleteSchedule(" + parse[i]['id'] + ")'></label>"
 
                     html += "</div>"
 
                 }
-                html += "<input type='submit' value='저장하기' class='btn btn-dark btn-lg m-t-40' onclick='saveSchedule("+ idList +")'>"
+                html += "<input type='button' value='저장하기' class='btn btn-dark btn-lg m-t-40' onclick='saveSchedule("+ idList +")' name='saveButton' id='saveButton'>"
                 $("#result").html(html);
 
             }
@@ -243,40 +255,27 @@
                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
             }
         });
+
     }
 
-    function saveSchedule() {
+    function saveSchedule(...list) {
         var bringDate = $("#inputDate").val();
         var arr = new Array();
 
-        var idList = [];
-        $("input[name=checkCheckbox]:checkbox").each(function () {
-            idList.push(this.val());
-        });
-        alert(idList.length);
 
-
-        for (var i = 0; i < idList.length; i++) {
+        for (var i = 0; i < list.length; i++) {
             var obj = new Object();
-            alert("1");
-            obj.id = idList[i];
-            alert("2");
-            obj.isEnd = function () {
-                if ($("input[id="+ idList[i] +"]").is(":checked")) {
-                    return "true";
-                }else{
-                    return "false";
-                }
-            };
-            alert("3");
-            obj.header = $("input[name="+ idList[i] +" header]:text").val();
-            obj.body = $("input[name="+ idList[i] +" body]:text").val();
+            obj.id = list[i];
+            if ($("input[id="+ list[i] +"]").is(":checked")) {
+                obj.isEnd = "true";
+            }else{
+                obj.isEnd = "false";
+            }
+            obj.header = $("input[name="+ list[i] +"-header]:text").val();
+            obj.body = $("input[name="+ list[i] +"-body]:text").val();
             arr.push(obj);
-            alert("4");
         }
 
-        var s = JSON.stringify(arr);
-        alert(s);
 
         if (bringDate == "") {
             alert("날짜를 적어주세요.");
@@ -288,33 +287,11 @@
             , async: false
             , data: {
                 bringDate : bringDate,
-                arr : arr
+                arr: JSON.stringify(arr)
             }
-            // , success: function (scheduleList) {
-            //     var parse = JSON.parse(scheduleList);
-            //     var html = "";
-            //     for (var i = 0; i < parse.length; i++) {
-            //         html+="<div class='m-b-20'>";
-            //         if (parse[i]['isEnd'] === 'true') {
-            //             html += "<input type='checkbox' id='" + parse[i]['id'] + "' name='" + parse[i]['id'] +
-            //                 "' class='btn-checkbox' checked>"
-            //         }else{
-            //             html += "<input type='checkbox' id='" + parse[i]['id'] + "' name='" + parse[i]['id'] +
-            //                 "' class='btn-checkbox'>"
-            //         }
-            //         html += "<label for='" + parse[i]['id'] +"'>"
-            //         html += "<input type='text' value='" + parse[i]['header'] + "' style='margin-left: 10px;' class='input-type-text'>";
-            //         html += "<strong>   -   </strong>";
-            //         html += "<input type='text' value='" + parse[i]['body'] + "' class='input-type-text'>";
-            //         html += "<input type='button' value='삭제' style='margin-left: 20px;' class='btn btn-danger' onclick='deleteSchedule(" + parse[i]['id'] + ")'></label>"
-            //
-            //         html += "</div>"
-            //
-            //     }
-            //     html += "<input type='button' value='저장하기' class='btn btn-dark btn-lg m-t-40' onclick='saveSchedule("+ parse +")'>"
-            //     $("#result").html(html);
-            //
-            // }
+            , success: function (i) {
+                alert("성공적으로 저장되었습니다");
+            }
             ,error:function(request, error) {
                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
             }

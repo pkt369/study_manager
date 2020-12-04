@@ -1,9 +1,16 @@
 package studyFire.schedule.controller;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.springframework.boot.json.JsonParser;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +20,10 @@ import studyFire.schedule.domain.form.ScheduleForm;
 import studyFire.schedule.service.MemberService;
 import studyFire.schedule.service.ScheduleService;
 
+import java.lang.reflect.Type;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -123,13 +132,23 @@ public class ScheduleController {
 
     @RequestMapping(value = "/saveSchedule", method = RequestMethod.GET)
     @ResponseBody
-    public String saveSchedule(@RequestParam(value = "bringDate")String date,
-                                 @RequestParam(value = "arr")List<String> scheduleList) {
+    public String saveSchedule (@RequestParam(value = "bringDate")String date,
+                                 @RequestParam(value = "arr")String scheduleList)  throws ParseException {
         //저장
-        System.out.println(scheduleList.size());
-        for (String s : scheduleList) {
-            System.out.println(s);
-        }
+        System.out.println("scheduleList = " + scheduleList);
+
+        JSONParser parser = new JSONParser();
+        Object parse = parser.parse(scheduleList);
+        System.out.println("parse = " + parse);
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<Map<String, String>>>(){}.getType();
+        ArrayList<Map<String, String>> data = gson.fromJson(scheduleList, type);
+
+        scheduleService.ChangeSchedule(data);
+
+//        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(data));
+
 
         //조회
         LocalDate parseDate = LocalDate.parse(date);
@@ -138,7 +157,6 @@ public class ScheduleController {
         System.out.println("scheduleByDate.size() = " + scheduleByDate.size());
 
         JSONArray ja = new JSONArray();
-
         for (int i = 0; i < scheduleByDate.size(); i++) {
             JSONObject jo = new JSONObject();
             jo.put("id", scheduleByDate.get(i).getId());
